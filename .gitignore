@@ -1,0 +1,5 @@
+*.o
+*.swp
+libft.a
+.DS_Store
+lem-in
