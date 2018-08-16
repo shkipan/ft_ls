@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 11:11:20 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/09 20:43:36 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/16 18:13:53 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int				ft_atoi_bin(char *s);
 void			ft_putnstr(char const *s, size_t length);
 void			ft_strcapit(char *s);
 unsigned int	ft_options(char *s);
+size_t			ft_count_int(int c);
 
 char			*ft_itoa_uns(unsigned long int n);
 

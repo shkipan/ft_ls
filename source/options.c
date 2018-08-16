@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/26 18:30:35 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/09 20:40:18 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/16 21:30:37 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int				is_supported(char c)
 	int i;
 
 	i = -1;
-	while (++i < 2)
+	while (++i < 7)
 		if (SUPPORTED[i] == c)
 			return (1);
 	return (0);

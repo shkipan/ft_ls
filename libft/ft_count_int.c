@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_count_int.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/19 15:12:34 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/16 14:13:27 by dskrypny         ###   ########.fr       */
+/*   Created: 2018/08/16 17:56:13 by dskrypny          #+#    #+#             */
+/*   Updated: 2018/08/16 18:14:03 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+size_t	ft_count_int(int c)
 {
-	if (lst == NULL || f == NULL)
-		return ;
-	while (lst)
-	{
-		f(lst);
-		lst = lst->next;
-	}
+	int i;
+
+	i = 0;
+	while ((c = c / 10))
+		i++;
+	return (i + 1);
 }

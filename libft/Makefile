@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/19 15:39:00 by dskrypny          #+#    #+#              #
-#    Updated: 2018/08/09 15:45:31 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/08/16 17:57:35 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ OBJ_DIR = ./objects/
 
 SOURCE = ft_atoi.c \
 			ft_bzero.c \
+			ft_count_int.c \
 			ft_isalnum.c \
 			ft_isalpha.c \
 			ft_isascii.c \

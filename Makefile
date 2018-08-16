@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/08/09 20:39:34 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/08/16 18:29:58 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,13 @@ OBJ_DIR = ./objects/
 SRC_DIR = ./source/
 
 SOURCE = main.c \
-		 handle_dir.c\
-		 options.c
+		 messages.c \
+		 handle.c \
+		 list.c \
+		 sorting.c \
+		 options.c \
+		 output.c \
+		 properties.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SOURCE:.c=.o))
 
@@ -29,13 +34,16 @@ LIB = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ_DIR) $(OBJ)
 	@make -C libft/
 	@gcc $(FLAGS) $(OBJ) -o $(NAME) $(LIB)
 	@echo "$(NAME) compiled"
 
 $(OBJ_DIR)%.o: %.c
 	@gcc $(FLAGS) -c -o $@ $<
+
+$(OBJ_DIR):
+	@mkdir $(OBJ_DIR)
 
 clean:
 	@make clean -C libft/
