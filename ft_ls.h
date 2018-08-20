@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:40:28 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/16 21:29:39 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/20 15:19:48 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,33 @@
 # include <dirent.h>
 # include <pwd.h>
 # include <grp.h>
+# include <time.h>
+# include <sys/ioctl.h>
 
 # define PATH_MAX 255
-# define SUPPORTED "al1CFR"
+# define FLAG_COUNT 13
+# define SUPPORTED "afgmlnop1CFRL"
 
 typedef struct dirent	t_dirent;
 typedef struct stat		t_stat;
 typedef struct passwd	t_passwd;
 typedef struct group	t_group;
+typedef struct timespec	t_timing;
+typedef struct winsize	t_winsize;
 
 typedef struct s_info	t_info;
 
 struct			s_info
 {
-	char			st_mode[11];
+	char			st_type;
 	int				st_nlink;
+	size_t			st_uid;
+	size_t			st_gid;
 	char			*st_user;
 	char			*st_group;
 	size_t			st_size;
+	char			*st_time;
+	char			st_mode[11];
 	char			*st_name;
 	t_info			*prev;
 	t_info			*next;
@@ -45,23 +54,34 @@ struct			s_info
 
 typedef struct	s_ls
 {
+	char			last_flag;
 	unsigned int	opt;
+	unsigned int	file_count;
+	unsigned int	col_count;
+	unsigned int	row_count;
+	size_t			group_width;
+	size_t			name_width;
 	size_t			nlink_width;
 	size_t			size_width;
+	size_t			tab_width;
 	size_t			user_width;
-	size_t			group_width;
 	size_t			total;
+	t_winsize		win_param;
 	t_info			*files;
 }				t_ls;
 
+void			fill_info(t_info **tmp, char *name, t_info *prev, t_stat stats);
 void			add_info(t_ls *lst, char *name, t_stat stats);
 int				handle_file(char *name, t_ls *lst);
 int				handle_dir(char *name, t_ls *lst);
 
 void			sort_info(t_ls *lst);
 void			properties(t_ls *lst);
-unsigned int	ls_options(char *av);
-void			print_info(t_ls *lst);
+unsigned int	ls_options(t_ls *lst, char *av);
+int				print_info(t_ls *lst);
+
+int				print_m(t_ls *lst);
+int				print_l(t_ls *lst);
 
 void			usage(char c);
 void			error(int c, char *file);

@@ -6,24 +6,38 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/26 18:30:35 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/16 21:30:37 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/20 13:52:59 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ls.h"
 
-int				is_supported(char c)
+static int		is_supported(char c)
 {
 	int i;
 
 	i = -1;
-	while (++i < 7)
+	while (++i < FLAG_COUNT)
 		if (SUPPORTED[i] == c)
 			return (1);
 	return (0);
 }
 
-unsigned int	ls_options(char *av)
+static void		find_last_flag(t_ls *lst, char av)
+{
+	if (av == 'n')
+		lst->last_flag = 'l';
+	if (av == 'l' && lst->last_flag != 'n')
+		lst->last_flag = 'l';
+	if (av == '1')
+		lst->last_flag = '1';
+	if (av == 'm')
+		lst->last_flag = 'm';
+	if (av == 'g' || av == 'o')
+		lst->last_flag = 'l';
+}
+
+unsigned int	ls_options(t_ls *lst, char *av)
 {
 	unsigned int	res;
 	int				j;
@@ -32,6 +46,7 @@ unsigned int	ls_options(char *av)
 	res = ft_options(av);
 	while (av[++j])
 	{
+		find_last_flag(lst, av[j]);
 		if (av[j] == '1')
 			res = SET_BIT(res, 31);
 		else if (av[j] == 'C')
@@ -43,5 +58,7 @@ unsigned int	ls_options(char *av)
 		else if (!is_supported(av[j]))
 			usage(av[j]);
 	}
+	if (CHECK_FLAG(res, 'o') || CHECK_FLAG(res, 'g') || CHECK_FLAG(res, 'n'))
+		res = SET_BIT(res, 'l' - 'a');
 	return (res);
 }

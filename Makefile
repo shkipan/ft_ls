@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/08/16 18:29:58 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/08/20 13:34:25 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,15 @@ NAME = ft_ls
 OBJ_DIR = ./objects/
 SRC_DIR = ./source/
 
-SOURCE = main.c \
-		 messages.c \
+SOURCE = alph_sorting.c \
+		 fill_info.c \
 		 handle.c \
+		 main.c \
+		 messages.c \
 		 list.c \
-		 sorting.c \
 		 options.c \
 		 output.c \
+		 printing.c \
 		 properties.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SOURCE:.c=.o))

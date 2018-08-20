@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/16 18:26:13 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/20 15:35:36 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ int		handle_dir(char *name, t_ls *lst)
 	}
 	free(entry);
 	closedir(dirptr);
+	if (!CHECK_FLAG(lst->opt, 'f'))
+		sort_info(lst);
 	return (0);
 }
