@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/27 13:30:19 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 19:11:59 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int			init_lst(t_ls **lst, int ac, char **av)
 	(*lst)->ac = ac;
 	(*lst)->av = av;
 	(*lst)->opt = 0;
+	(*lst)->total = 0;
 	(*lst)->file_count = 0;
 	(*lst)->files = NULL;
 	(*lst)->last_flag = '1';
@@ -29,7 +30,7 @@ int			init_lst(t_ls **lst, int ac, char **av)
 		(*lst)->opt |= (av[i][0] == '-') ? ls_options(*lst, av[i]) : 0;
 	if (CHECK_FLAG((*lst)->opt, 'o') || CHECK_FLAG((*lst)->opt, 'g')
 			|| CHECK_FLAG((*lst)->opt, 'n'))
-		(*lst)->opt |= SET_BIT((*lst)->opt, 'l' - 'a');
+		(*lst)->opt |= SET_BIT(0, 'l' - 'a');
 	(*lst)->next = NULL;
 	return (i);
 }
@@ -49,5 +50,6 @@ int			main(int ac, char **av)
 			handle_dir(av[i], lst);
 	}
 	properties(lst);
+	system("leaks ft_ls");
 	return (0);
 }

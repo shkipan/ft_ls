@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 17:50:21 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/27 13:19:10 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 19:15:23 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,20 @@ static void		init_prop(t_ls *lst)
 	lst->size_width = 0;
 	lst->user_width = 0;
 	lst->group_width = 0;
+	lst->blks_width = 0;
 	lst->col_count = 1;
 	lst->row_count = lst->file_count;
 }
 
-static void		modify_output(t_ls *lst)
+static void		check_link(t_info *tmp)
 {
-	while (lst->name_width >= lst->tab_width)
-		lst->tab_width += 8;
+	char	*buf;
+
+	if (tmp->st_mode[0] != 'l')
+		return ;
+	buf = (char *)malloc(sizeof(char) * (256));
+	readlink(tmp->full_path, buf, 255);
+	tmp->st_link = buf;
 }
 
 static void		count_params_width(t_ls *lst, t_info *tmp)
@@ -38,6 +44,8 @@ static void		count_params_width(t_ls *lst, t_info *tmp)
 		lst->name_width = ft_strlen(tmp->st_name);
 	if (lst->size_width < ft_count_int(tmp->st_size))
 		lst->size_width = ft_count_int(tmp->st_size);
+	if (lst->blks_width < ft_count_int(tmp->st_blocks))
+		lst->blks_width = ft_count_int(tmp->st_blocks);
 	if (CHECK_FLAG(lst->opt, 'n'))
 	{
 		if (lst->user_width < ft_count_int(tmp->st_uid))
@@ -84,6 +92,8 @@ void			properties(t_ls *lst)
 	tmp = lst->files;
 	while (tmp)
 	{
+		check_link(tmp);
+		lst->total += tmp->st_blocks;
 		count_params_width(lst, tmp);
 		check_attr(&tmp);
 		del = tmp->st_time;
@@ -94,6 +104,7 @@ void			properties(t_ls *lst)
 		tmp->st_time[length] = '\0';
 		tmp = tmp->next;
 	}
-	modify_output(lst);
+	while (lst->name_width >= lst->tab_width)
+		lst->tab_width += 8;
 	print_info(lst);
 }

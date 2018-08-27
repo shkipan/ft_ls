@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:40:28 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/27 13:17:35 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 19:30:33 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/xattr.h>
 
 # define PATH_MAX 255
-# define FLAG_COUNT 17
-# define SUPPORTED "afgmlnoprtx1CFRL@"
+# define FLAG_COUNT 18
+# define SUPPORTED "afgmlnoprstx1CFRL@"
 
 #define OK ft_printf("ok\n");
 
@@ -46,11 +46,13 @@ struct			s_info
 	int				xattr_length;
 	size_t			st_uid;
 	size_t			st_gid;
+	size_t			st_size;
+	blkcnt_t		st_blocks;
 	time_t			st_seconds;
 	char			*st_user;
 	char			*st_group;
-	size_t			st_size;
 	char			*st_time;
+	char			*st_link;
 	char			st_mode[12];
 	char			*st_name;
 	char			*full_path;
@@ -75,6 +77,7 @@ struct			s_ls
 	size_t			size_width;
 	size_t			tab_width;
 	size_t			user_width;
+	size_t			blks_width;
 	size_t			total;
 	t_winsize		win_param;
 	char			**av;
@@ -100,5 +103,7 @@ void			print_recursive(t_ls *lst);
 
 void			usage(char c);
 void			error(int c, char *file);
+void			edit_name(t_ls *lst, t_info *tmp);
+size_t			newline(void);
 
 #endif

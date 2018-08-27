@@ -6,13 +6,13 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/27 13:30:26 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 14:17:42 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ls.h"
 
-void			print_win(t_ls lst)
+void			print_win(t_ls *lst)
 {
 	ft_printf("%d files max width %d suggested tab %d\n",
 			lst->file_count, lst->name_width, lst->tab_width);

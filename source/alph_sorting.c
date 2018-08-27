@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 13:46:40 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/23 16:52:07 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 15:07:46 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,23 @@ static void		swap_mode(t_info *t1, t_info *t2)
 		t2->st_mode[i] = c;
 	}
 	temp_seconds = t1->st_seconds;
-	t1->st_seconds = t2->st_seconds;
-	t2->st_seconds = temp_seconds;
 	temp_user = t1->st_user;
-	t1->st_user = t2->st_user;
-	t2->st_user = temp_user;
 	temp_group = t1->st_group;
+	t1->st_seconds = t2->st_seconds;
+	t1->st_user = t2->st_user;
 	t1->st_group = t2->st_group;
+	t2->st_seconds = temp_seconds;
+	t2->st_user = temp_user;
 	t2->st_group = temp_group;
+}
+
+static void		swap_info2(t_info *t1, t_info *t2)
+{
+	size_t	temp_blocks;
+
+	temp_blocks = t1->st_blocks;
+	t1->st_blocks = t2->st_blocks;
+	t2->st_blocks = temp_blocks;
 }
 
 static void		swap_info(t_info *t1, t_info *t2)
@@ -62,6 +71,7 @@ static void		swap_info(t_info *t1, t_info *t2)
 	t2->st_size = temp_size;
 	t2->st_nlink = temp_nlink;
 	swap_mode(t1, t2);
+	swap_info2(t1, t2);
 }
 
 void			sort_time(t_ls *lst)
