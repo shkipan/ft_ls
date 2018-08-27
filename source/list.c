@@ -6,13 +6,13 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 21:56:51 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/17 21:04:12 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 13:18:58 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ls.h"
 
-static void	create_info(t_ls *lst, char *name, t_stat stats)
+static void		create_info(t_ls *lst, char *name, t_stat stats)
 {
 	t_info	**tmp;
 
@@ -21,7 +21,7 @@ static void	create_info(t_ls *lst, char *name, t_stat stats)
 	fill_info(tmp, name, NULL, stats);
 }
 
-void		add_info(t_ls *lst, char *name, t_stat stats)
+void			add_info(t_ls *lst, char *path, char *name, t_stat stats)
 {
 	t_info	**tmp;
 	t_info	*prev;
@@ -37,6 +37,7 @@ void		add_info(t_ls *lst, char *name, t_stat stats)
 			tmp = &(*tmp)->next;
 		}
 		*tmp = (t_info *)malloc(sizeof(t_info));
+		(*tmp)->full_path = ft_strdup(path);
 		fill_info(tmp, name, prev, stats);
 	}
 	lst->file_count++;

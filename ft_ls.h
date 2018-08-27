@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:40:28 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/20 15:19:48 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 13:17:35 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@
 # include <grp.h>
 # include <time.h>
 # include <sys/ioctl.h>
+# include <sys/xattr.h>
 
 # define PATH_MAX 255
-# define FLAG_COUNT 13
-# define SUPPORTED "afgmlnop1CFRL"
+# define FLAG_COUNT 17
+# define SUPPORTED "afgmlnoprtx1CFRL@"
+
+#define OK ft_printf("ok\n");
 
 typedef struct dirent	t_dirent;
 typedef struct stat		t_stat;
@@ -40,25 +43,32 @@ struct			s_info
 {
 	char			st_type;
 	int				st_nlink;
+	int				xattr_length;
 	size_t			st_uid;
 	size_t			st_gid;
+	time_t			st_seconds;
 	char			*st_user;
 	char			*st_group;
 	size_t			st_size;
 	char			*st_time;
-	char			st_mode[11];
+	char			st_mode[12];
 	char			*st_name;
+	char			*full_path;
+	char			*xattr;
 	t_info			*prev;
 	t_info			*next;
 };
 
-typedef struct	s_ls
+typedef struct s_ls		t_ls;
+
+struct			s_ls
 {
 	char			last_flag;
 	unsigned int	opt;
 	unsigned int	file_count;
 	unsigned int	col_count;
 	unsigned int	row_count;
+	int				ac;
 	size_t			group_width;
 	size_t			name_width;
 	size_t			nlink_width;
@@ -67,13 +77,16 @@ typedef struct	s_ls
 	size_t			user_width;
 	size_t			total;
 	t_winsize		win_param;
+	char			**av;
 	t_info			*files;
-}				t_ls;
+	t_ls			*next;
+};
 
 void			fill_info(t_info **tmp, char *name, t_info *prev, t_stat stats);
-void			add_info(t_ls *lst, char *name, t_stat stats);
+void			add_info(t_ls *lst, char *path, char *name, t_stat stats);
 int				handle_file(char *name, t_ls *lst);
 int				handle_dir(char *name, t_ls *lst);
+int				init_lst(t_ls **lst, int ac, char **av);
 
 void			sort_info(t_ls *lst);
 void			properties(t_ls *lst);
@@ -82,6 +95,8 @@ int				print_info(t_ls *lst);
 
 int				print_m(t_ls *lst);
 int				print_l(t_ls *lst);
+int				print_x(t_ls *lst);
+void			print_recursive(t_ls *lst);
 
 void			usage(char c);
 void			error(int c, char *file);

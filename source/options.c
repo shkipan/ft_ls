@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/26 18:30:35 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/20 13:52:59 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/23 15:31:58 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ static void		find_last_flag(t_ls *lst, char av)
 		lst->last_flag = 'l';
 	if (av == 'l' && lst->last_flag != 'n')
 		lst->last_flag = 'l';
+	if (av == 'x')
+		lst->last_flag = 'x';
 	if (av == '1')
 		lst->last_flag = '1';
 	if (av == 'm')
 		lst->last_flag = 'm';
 	if (av == 'g' || av == 'o')
 		lst->last_flag = 'l';
+	if (av == 'f')
+		lst->opt |= 1;
 }
 
 unsigned int	ls_options(t_ls *lst, char *av)
@@ -55,6 +59,8 @@ unsigned int	ls_options(t_ls *lst, char *av)
 			res = SET_BIT(res, 29);
 		else if (av[j] == 'R')
 			res = SET_BIT(res, 28);
+		else if (av[j] == '@')
+			res = SET_BIT(res, 27);
 		else if (!is_supported(av[j]))
 			usage(av[j]);
 	}

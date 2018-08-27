@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 17:50:21 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/20 14:20:01 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/08/27 13:19:10 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void		init_prop(t_ls *lst)
 	lst->group_width = 0;
 	lst->col_count = 1;
 	lst->row_count = lst->file_count;
-	if (CHECK_FLAG(lst->opt, 'n'))
-		lst->opt |= SET_BIT(lst->opt, 'l' - 'a');
 }
 
 static void		modify_output(t_ls *lst)
@@ -32,7 +30,7 @@ static void		modify_output(t_ls *lst)
 		lst->tab_width += 8;
 }
 
-static void		count_params(t_ls *lst, t_info *tmp)
+static void		count_params_width(t_ls *lst, t_info *tmp)
 {
 	if (lst->nlink_width < ft_count_int(tmp->st_nlink))
 		lst->nlink_width = ft_count_int(tmp->st_nlink);
@@ -56,21 +54,46 @@ static void		count_params(t_ls *lst, t_info *tmp)
 	}
 }
 
+static void		check_attr(t_info **tmp)
+{
+	char	*buf;
+	int		c;
+
+	buf = NULL;
+	c = listxattr((*tmp)->full_path, NULL, 255, 0);
+	if (c > 0)
+	{
+		buf = (char *)malloc(sizeof(char) * (c + 1));
+		c = listxattr((*tmp)->full_path, buf, c, 0);
+		(*tmp)->st_mode[10] = '@';
+		(*tmp)->xattr = ft_strdup(buf);
+		(*tmp)->xattr_length = c;
+	}
+	free(buf);
+}
+
 void			properties(t_ls *lst)
 {
 	t_info	*tmp;
 	size_t	length;
+	char	*del;
 
+	if (!CHECK_FLAG(lst->opt, 'f'))
+		sort_info(lst);
 	init_prop(lst);
 	tmp = lst->files;
 	while (tmp)
 	{
-		count_params(lst, tmp);
-		tmp->st_time = ft_strchr(tmp->st_time, ' ') + 1;
+		count_params_width(lst, tmp);
+		check_attr(&tmp);
+		del = tmp->st_time;
+		tmp->st_time = ft_strdup(ft_strchr(tmp->st_time, ' ') + 1);
+		free(del);
 		length = ft_strlen(tmp->st_time) -
 			ft_strlen(ft_strrchr(tmp->st_time, ':'));
 		tmp->st_time[length] = '\0';
 		tmp = tmp->next;
 	}
 	modify_output(lst);
+	print_info(lst);
 }

@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/08/20 13:34:25 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/08/27 13:43:34 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,16 +36,18 @@ LIB = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJ)
+$(NAME): $(OBJ)
 	@make -C libft/
 	@gcc $(FLAGS) $(OBJ) -o $(NAME) $(LIB)
 	@echo "$(NAME) compiled"
 
-$(OBJ_DIR)%.o: %.c
-	@gcc $(FLAGS) -c -o $@ $<
+$(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
+
+$(OBJ_DIR)%.o: %.c
+	@gcc $(FLAGS) -c -o $@ $<
 
 clean:
 	@make clean -C libft/
@@ -54,6 +56,7 @@ clean:
 
 fclean: clean
 	@make fclean -C libft/
+	@rm -rf $(OBJ_DIR)
 	@rm -rf $(NAME)
 	@echo "$(NAME) file deleted"
 
