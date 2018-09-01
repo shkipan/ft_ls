@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   messages.c                                         :+:      :+:    :+:   */
+/*   add_slash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/16 18:27:30 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/01 20:46:30 by dskrypny         ###   ########.fr       */
+/*   Created: 2018/08/27 19:25:04 by dskrypny          #+#    #+#             */
+/*   Updated: 2018/09/01 19:31:38 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ls.h"
 
-int			error(t_ls *lst, char *file_name)
+size_t		newline(void)
 {
-	t_stat	file_info;
-
-	lst->error = 1;
-	lst->printed = 1;
-	if (!lstat(file_name, &file_info))
-		ft_printf("ft_ls: %s: Permission denied\n", file_name);
-	else
-		ft_printf("ft_ls: %s: No such file or directory\n", file_name);
-	return (1);
+	ft_printf("\n");
+	return (0);
 }
 
-void		usage(char c)
+void		edit_name(t_ls *lst, t_info *tmp)
 {
-	ft_printf("ft_ls: illegal option -- %c\n", c);
-	ft_printf("usage: ./ft_ls [%s] [file ...]\n", SUPPORTED);
-	exit(1);
+	char	*del;
+
+	if (!CHECK_FLAG(lst->opt, 'p'))
+		return ;
+	if (tmp->st_mode[0] == 'd')
+	{
+		del = tmp->st_name;
+		tmp->st_name = ft_strjoin(tmp->st_name, "/");
+		free(del);
+	}
 }

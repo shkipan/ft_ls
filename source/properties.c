@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 17:50:21 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/27 19:15:23 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/01 19:40:58 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,4 @@ void			properties(t_ls *lst)
 	}
 	while (lst->name_width >= lst->tab_width)
 		lst->tab_width += 8;
-	print_info(lst);
 }

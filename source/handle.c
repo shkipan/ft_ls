@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/08/27 13:32:51 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/01 20:38:05 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,9 @@
 void		create_path(char path[PATH_MAX + 1], char *dir_name,
 		char *file_name)
 {
-	if (!ft_strcmp(file_name, ".") || (!ft_strcmp(file_name, ".")))
-	{
-		if (!ft_strcmp(file_name, "."))
-			ft_strcpy(path, ".");
-		else
-			ft_strcpy(path, "..");
-		return ;
-	}
 	ft_strncpy(path, dir_name, PATH_MAX);
-	ft_strncat(path, "/", PATH_MAX);
+	if (path[ft_strlen(path) - 1] != '/')
+		ft_strncat(path, "/", PATH_MAX);
 	ft_strncat(path, file_name, PATH_MAX);
 }
 
@@ -47,19 +40,11 @@ int			handle_file(char *name, t_ls *lst)
 	if (!stat(path, &file_info))
 		add_info(lst, path, name, file_info);
 	else
-		error(1, name);
+		error(lst, name);
 	return (1);
 }
 
-static void	fix_path(char *dir, t_ls *lst)
-{
-	char	path[PATH_MAX + 1];
-
-	create_path(path, dir, lst->files->st_name);
-	lst->files->full_path = ft_strdup(path);
-}
-
-int			handle_dir(char *name, t_ls *lst)
+int			handle_dir(char *name, char *st_name, t_ls *lst)
 {
 	DIR			*dirptr;
 	t_dirent	dp;
@@ -69,7 +54,7 @@ int			handle_dir(char *name, t_ls *lst)
 
 	dirptr = opendir(name);
 	if (!dirptr)
-		return (handle_file(name, lst));
+		return (error(lst, st_name));
 	readdir_r(dirptr, &dp, &entry);
 	while (entry)
 	{
@@ -80,9 +65,10 @@ int			handle_dir(char *name, t_ls *lst)
 			add_info(lst, path, dp.d_name, file_info);
 		readdir_r(dirptr, &dp, &entry);
 	}
-	if (lst->files)
-		fix_path(name, lst);
+	fix_path(lst);
 	free(entry);
 	closedir(dirptr);
+	properties(lst);
+	print_files(1, lst);
 	return (0);
 }
