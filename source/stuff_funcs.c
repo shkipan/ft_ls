@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 19:25:04 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/01 19:31:38 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:41:12 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ void		edit_name(t_ls *lst, t_info *tmp)
 		tmp->st_name = ft_strjoin(tmp->st_name, "/");
 		free(del);
 	}
+}
+
+void		print_win(t_ls *lst)
+{
+	ft_printf("%d files max width %d suggested tab %d\n",
+			lst->file_count, lst->name_width, lst->tab_width);
+	ft_printf("win_width = %d win_heigth = %d cols %d rows %d\n",
+			lst->win_param.ws_col, lst->win_param.ws_row,
+			lst->col_count, lst->row_count);
+	ft_printf("last flag %c\n", lst->last_flag);
 }

@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:40:28 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/01 20:30:34 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:35:52 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/xattr.h>
 
 # define PATH_MAX 255
-# define FLAG_COUNT 18
-# define SUPPORTED "adfgmlnoprstx1CFRL@"
+# define FLAG_COUNT 19
+# define SUPPORTED "adfgimlnoprstx1CFRL@"
 
 #define OK ft_printf("ok\n");
 # define LE system("leaks ft_ls");
@@ -45,9 +45,10 @@ struct			s_info
 	char			st_type;
 	int				st_nlink;
 	int				xattr_length;
-	size_t			st_uid;
+	size_t			st_ino;
 	size_t			st_gid;
 	size_t			st_size;
+	size_t			st_uid;
 	blkcnt_t		st_blocks;
 	time_t			st_seconds;
 	char			*st_user;
@@ -100,11 +101,11 @@ void			sort_info(t_ls *lst);
 void			properties(t_ls *lst);
 unsigned int	ls_options(t_ls *lst, char *av);
 int				print_files(short flag, t_ls *lst);
-int				print_dirs(t_ls *lst);
+int				print_dirs(short flag, t_ls *lst);
 
 void			create_path(char path[PATH_MAX + 1], char *dir_name,
 		char *file_name);
-void			fix_path(t_ls *lst);
+void			fix_path(t_ls *lst, char *name);
 
 void			print_m(t_ls *lst, t_info *tmp);
 void			print_l(t_ls *lst, t_info *tmp);

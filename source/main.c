@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/01 20:46:56 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:10:45 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int			init_lst(t_ls **lst, char err, int ac, char **av)
 	return (i);
 }
 
-void		fix_path(t_ls *lst)
+void		fix_path(t_ls *lst, char *name)
 {
 	char	path[PATH_MAX + 1];
 
-	create_path(path, ".", lst->files->st_name);
+	create_path(path, name, lst->files->st_name);
 	lst->files->full_path = ft_strdup(path);
 }
 
@@ -61,10 +61,12 @@ int			main(int ac, char **av)
 		while (++i < ac)
 			handle_file(av[i], lst);
 	}
-	fix_path(lst);
+	if (lst->files)
+		fix_path(lst, ".");
 	properties(lst);
 	print_files(0, lst);
 	if (lst->dirs_to_print)
-		print_dirs(lst);
+		print_dirs(0, lst);
+//	LE
 	return (lst->error);
 }

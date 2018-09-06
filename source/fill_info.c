@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 17:58:25 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/01 16:31:19 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:32:13 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		fill_info(t_info **tmp, char *name, t_info *prev,
 		t_stat stats)
 {
 	(*tmp)->st_name = ft_strdup(name);
+	(*tmp)->st_ino = stats.st_ino;
 	(*tmp)->st_size = stats.st_size;
 	(*tmp)->st_nlink = stats.st_nlink;
 	(*tmp)->st_blocks = stats.st_blocks;
