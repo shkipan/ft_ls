@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:40:28 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:35:52 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/11 11:09:37 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@
 # include <sys/xattr.h>
 
 # define PATH_MAX 255
-# define FLAG_COUNT 19
-# define SUPPORTED "adfgimlnoprstx1CFRL@"
-
-#define OK ft_printf("ok\n");
-# define LE system("leaks ft_ls");
+# define FLAG_COUNT 16
+# define SUPPORTED "adfgimlnoprstx1RF@"
 
 typedef struct dirent	t_dirent;
 typedef struct stat		t_stat;
@@ -51,6 +48,8 @@ struct			s_info
 	size_t			st_uid;
 	blkcnt_t		st_blocks;
 	time_t			st_seconds;
+	int				dev[2];
+	int				chmod[3];
 	char			*st_user;
 	char			*st_group;
 	char			*st_time;
@@ -77,6 +76,7 @@ struct			s_ls
 	int				ac;
 	int				dirs_to_print;
 	size_t			group_width;
+	size_t			ino_width;
 	size_t			name_width;
 	size_t			nlink_width;
 	size_t			printed_width;
@@ -97,6 +97,8 @@ int				handle_file(char *name, t_ls *lst);
 int				handle_dir(char *name, char *st_name, t_ls *lst);
 int				init_lst(t_ls **lst, char err, int ac, char **av);
 
+void			swap_info(t_info *t1, t_info *t2);
+
 void			sort_info(t_ls *lst);
 void			properties(t_ls *lst);
 unsigned int	ls_options(t_ls *lst, char *av);
@@ -111,11 +113,13 @@ void			print_m(t_ls *lst, t_info *tmp);
 void			print_l(t_ls *lst, t_info *tmp);
 void			print_x(t_ls *lst, t_info *tmp);
 void			print_1(t_ls *lst, t_info *tmp);
-void			print_recursive(t_ls *lst);
 
 void			usage(char c);
 int				error(t_ls *lst, char *file);
+
 void			edit_name(t_ls *lst, t_info *tmp);
 size_t			newline(void);
+char			*select_end(t_ls *lst, t_info *tmp);
+void			print_name(t_ls *lst, t_info *tmp);
 
 #endif

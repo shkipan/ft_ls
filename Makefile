@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/09/01 19:35:07 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/09/11 11:02:32 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SOURCE = alph_sorting.c \
 		 printing.c \
 		 print_l.c \
 		 properties.c \
-		 stuff_funcs.c
+		 stuff_funcs.c \
+		 swap_info.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SOURCE:.c=.o))
 
