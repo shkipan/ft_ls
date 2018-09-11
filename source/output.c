@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:40:33 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/11 10:55:30 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int				print_dirs(short f, t_ls *lst)
 			if (lst->printed > 0)
 				ft_putchar('\n');
 			if (f && CHECK_BIT(lst->opt, 28))
-				ft_printf("%s:\n", tmp->full_path + 2);
+				ft_printf("%s:\n", tmp->full_path);
 			else if (lst->printed || lst->dirs_to_print != 1)
 				ft_printf("%s:\n", tmp->st_name);
 			init_lst(&new, lst->error, lst->ac, lst->av);

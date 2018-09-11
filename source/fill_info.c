@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 17:58:25 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:32:13 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/11 11:12:14 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ static void	fill_mode(t_info **tmp, mode_t mode)
 	i = 0;
 	(*tmp)->st_mode[i] = choose_type(mode);
 	while (++i < 10)
+	{
 		(*tmp)->st_mode[i] = (CHECK_BIT(mode, 9 - i)) ? str[i - 1] : '-';
+		if (CHECK_BIT(mode, 9 - i))
+			(*tmp)->chmod[(i - 1) / 3] =
+				SET_BIT((*tmp)->chmod[(i - 1) / 3], (i - 1) % 3);
+	}
 	(*tmp)->st_mode[i++] = ' ';
 	(*tmp)->st_mode[i] = '\0';
 }
@@ -67,6 +72,11 @@ void		fill_info(t_info **tmp, char *name, t_info *prev,
 	(*tmp)->st_blocks = stats.st_blocks;
 	(*tmp)->st_seconds = stats.st_mtimespec.tv_sec;
 	(*tmp)->st_time = ft_strdup(ctime(&((*tmp)->st_seconds)));
+	(*tmp)->chmod[0] = 0;
+	(*tmp)->chmod[1] = 0;
+	(*tmp)->chmod[2] = 0;
+	(*tmp)->dev[0] = 0;
+	(*tmp)->dev[1] = 0;
 	fill_mode(tmp, stats.st_mode);
 	fill_user(tmp, stats);
 	(*tmp)->xattr_length = 0;

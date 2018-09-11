@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:10:45 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/10 19:59:47 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			init_lst(t_ls **lst, char err, int ac, char **av)
 	(*lst)->files = NULL;
 	(*lst)->last_flag = '1';
 	ioctl(0, TIOCGWINSZ, &((*lst)->win_param));
-	while (++i < ac && av[i][0] == '-')
+	while (++i < ac && av[i][0] == '-' && ft_strlen(av[i]) > 1)
 		(*lst)->opt |= (av[i][0] == '-') ? ls_options(*lst, av[i]) : 0;
 	if (CHECK_FLAG((*lst)->opt, 'o') || CHECK_FLAG((*lst)->opt, 'g')
 			|| CHECK_FLAG((*lst)->opt, 'n'))
@@ -67,6 +67,5 @@ int			main(int ac, char **av)
 	print_files(0, lst);
 	if (lst->dirs_to_print)
 		print_dirs(0, lst);
-//	LE
 	return (lst->error);
 }

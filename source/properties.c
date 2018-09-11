@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 17:50:21 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:08:44 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/07 16:34:24 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void		init_prop(t_ls *lst)
 	lst->name_width = 0;
 	lst->nlink_width = 0;
 	lst->size_width = 0;
+	lst->ino_width = 0;
 	lst->user_width = 0;
 	lst->group_width = 0;
 	lst->blks_width = 0;
@@ -46,6 +47,8 @@ static void		count_params_width(t_ls *lst, t_info *tmp)
 		lst->size_width = ft_count_int(tmp->st_size);
 	if (lst->blks_width < ft_count_int(tmp->st_blocks))
 		lst->blks_width = ft_count_int(tmp->st_blocks);
+	if (lst->ino_width < ft_count_int(tmp->st_ino))
+		lst->ino_width = ft_count_int(tmp->st_ino);
 	if (CHECK_FLAG(lst->opt, 'n'))
 	{
 		if (lst->user_width < ft_count_int(tmp->st_uid))

@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/25 16:39:53 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:29:12 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/08 18:45:33 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void		create_path(char path[PATH_MAX + 1], char *dir_name,
 		char *file_name)
 {
+	if (file_name[0] == '/')
+	{
+		ft_strncpy(path, file_name, PATH_MAX);
+		return ;
+	}
 	if (!ft_strcmp(file_name, "."))
 	{
 		ft_strncpy(path, dir_name, PATH_MAX);
@@ -67,7 +72,7 @@ int			handle_dir(char *name, char *st_name, t_ls *lst)
 
 	dirptr = opendir(name);
 	if (!dirptr)
-		return (error(lst, name));
+		return (error(lst, st_name));
 	readdir_r(dirptr, &dp, &entry);
 	while (entry)
 	{

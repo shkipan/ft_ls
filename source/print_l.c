@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 19:29:38 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/06 19:41:07 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/07 16:43:50 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			print_l(t_ls *lst, t_info *tmp)
 {
 	lst->printed += (lst->printed) ? 0 : 1;
 	if (CHECK_FLAG(lst->opt, 'i'))
-		ft_printf("%zu ", tmp->st_ino);
+		ft_printf("%*zu ", lst->ino_width, tmp->st_ino);
 	if (CHECK_FLAG(lst->opt, 's'))
 		ft_printf("%*zu ", lst->blks_width, tmp->st_blocks);
 	ft_printf("%s ", tmp->st_mode);

@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/26 18:30:35 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/09/04 14:13:47 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/09/11 10:34:04 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ unsigned int	ls_options(t_ls *lst, char *av)
 		find_last_flag(lst, av[j]);
 		if (av[j] == '1')
 			res = SET_BIT(res, 31);
-		else if (av[j] == 'C')
+		else if (av[j] == 'G')
 			res = SET_BIT(res, 30);
 		else if (av[j] == 'F')
 			res = SET_BIT(res, 29);
